@@ -401,7 +401,7 @@ export const data100 = [
     },
 ];
 
-export const data10000 = [
+export const data1000 = [
     {
         id: 5613,
         name: 'Item 1',
@@ -4404,7 +4404,7 @@ export const data10000 = [
     },
 ];
 
-export const data1000 = [
+export const data10000 = [
     {
         id: 5613,
         name: 'Item 1',

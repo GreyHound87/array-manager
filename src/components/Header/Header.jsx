@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Header.module.scss';
+import { data100, data1000, data10000 } from '../../constants/mockData';
 
-export function Header() {
+export function Header({ handleRunScript, setResult }) {
     return (
         <header className={classes.header}>
             <h1>Array Manager SPA</h1>
@@ -19,13 +20,13 @@ export function Header() {
                 </Link>
             </nav>
             <div className={classes.buttons}>
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={() => setResult(handleRunScript(data100))}>
                     Run with 100 items
                 </button>
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={() => setResult(handleRunScript(data1000))}>
                     Run with 1000 items
                 </button>
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={() => setResult(handleRunScript(data10000))}>
                     Run with 10000 items
                 </button>
             </div>
