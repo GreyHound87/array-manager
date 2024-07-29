@@ -6,6 +6,10 @@ export function Header() {
     return (
         <header className={classes.header}>
             <h1>Array Manager SPA</h1>
+            <p className={classes.description}>
+                The function should take an array of objects with an id and return a new array that is a sorted and
+                immutable copy of the original.
+            </p>
             <nav className={classes.nav}>
                 <Link to="/" className={classes.tab}>
                     Solution 1
@@ -14,11 +18,17 @@ export function Header() {
                     Solution 2
                 </Link>
             </nav>
-            {/* Здесь должно быть описание ТЗ
-            (принимает массив объектов с id и должна вернуть объект, у которого есть метод, возвращающий
-            этот массив отсортированным и защищенным от изменений.) */}
-            {/* кнопки включающие выполнение скрипта с массивами разной длины например 100, 1000, 10000
-            + должно запускаться измерение времени затраченное на выполнение задачи */}
+            <div className={classes.buttons}>
+                <button type="button" onClick={() => {}}>
+                    Run with 100 items
+                </button>
+                <button type="button" onClick={() => {}}>
+                    Run with 1000 items
+                </button>
+                <button type="button" onClick={() => {}}>
+                    Run with 10000 items
+                </button>
+            </div>
         </header>
     );
 }
