@@ -6,7 +6,7 @@ import { sortArr1 } from '../Solution1/sortArr1';
 
 export function Layout({ children }) {
     const [result, setResult] = useState('');
-    //    const [solution, setSolution] = useState('Solution1');
+    const [solution, setSolution] = useState('');
 
     function handleRunScript(data) {
         const startTime = performance.now();
@@ -22,7 +22,12 @@ export function Layout({ children }) {
 
     return (
         <>
-            <Header handleRunScript={handleRunScript} setResult={setResult} />
+            <Header
+                handleRunScript={handleRunScript}
+                setResult={setResult}
+                setSolution={setSolution}
+                solution={solution}
+            />
             <div className={classes.layout}>
                 <div className={classes.container}>{children}</div>
             </div>

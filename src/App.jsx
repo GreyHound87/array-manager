@@ -11,7 +11,8 @@ export function App() {
                     element={
                         <Layout>
                             <Routes>
-                                <Route index element={<Solution1 />} />
+                                {/* <Route index element={<Intro />} /> */}
+                                <Route path="/solution1" element={<Solution1 />} />
                                 <Route path="/solution2" element={<Solution2 />} />
                             </Routes>
                         </Layout>

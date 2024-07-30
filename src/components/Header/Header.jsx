@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import classes from './Header.module.scss';
 import { data100, data1000, data10000 } from '../../constants/mockData';
 
-export function Header({ handleRunScript, setResult }) {
+export function Header({ handleRunScript, setResult, setSolution, solution }) {
     return (
         <header className={classes.header}>
             <h1>Array Manager SPA</h1>
@@ -12,10 +13,18 @@ export function Header({ handleRunScript, setResult }) {
                 immutable copy of the original.
             </p>
             <nav className={classes.nav}>
-                <Link to="/" className={classes.tab}>
+                <Link
+                    to="/solution1"
+                    className={classNames(classes.tab, { [classes.activeTab]: solution === 'Solution1' })}
+                    onClick={() => setSolution('Solution1')}
+                >
                     Solution 1
                 </Link>
-                <Link to="/solution2" className={classes.tab}>
+                <Link
+                    to="/solution2"
+                    className={classNames(classes.tab, { [classes.activeTab]: solution === 'Solution2' })}
+                    onClick={() => setSolution('Solution2')}
+                >
                     Solution 2
                 </Link>
             </nav>
