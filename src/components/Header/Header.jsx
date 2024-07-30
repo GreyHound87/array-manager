@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import classes from './Header.module.scss';
 import { data100, data1000, data10000 } from '../../constants/mockData';
 
-export function Header({ handleRunScript, setResult, setSolution, solution }) {
+export function Header({ handleRunScript, setSolution, solution }) {
     return (
         <header className={classes.header}>
             <h1>Array Manager SPA</h1>
@@ -29,13 +29,13 @@ export function Header({ handleRunScript, setResult, setSolution, solution }) {
                 </Link>
             </nav>
             <div className={classes.buttons}>
-                <button type="button" onClick={() => setResult(handleRunScript(data100))}>
+                <button type="button" onClick={() => handleRunScript(data100)}>
                     Run with 100 items
                 </button>
-                <button type="button" onClick={() => setResult(handleRunScript(data1000))}>
+                <button type="button" onClick={() => handleRunScript(data1000)}>
                     Run with 1000 items
                 </button>
-                <button type="button" onClick={() => setResult(handleRunScript(data10000))}>
+                <button type="button" onClick={() => handleRunScript(data10000)}>
                     Run with 10000 items
                 </button>
             </div>

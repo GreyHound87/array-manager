@@ -6,7 +6,7 @@ import { sortArr1 } from '../Solution1/sortArr1';
 import { sortArr2 } from '../Solution2/sortArr2';
 
 export function Layout({ children }) {
-    const [result, setResult] = useState('');
+    const [results, setResults] = useState([]);
     const [solution, setSolution] = useState('');
 
     function handleRunScript(data) {
@@ -27,21 +27,22 @@ export function Layout({ children }) {
         }
         const endTime = performance.now();
         const timeTaken = endTime - startTime;
-        return `${solution}: Array length: ${data.length}, Time taken: ${timeTaken.toFixed(2)} ms`;
+        const newResult = {
+            id: results.length + 1,
+            solution,
+            dataSize: data.length,
+            timeTaken: timeTaken.toFixed(2),
+        };
+        setResults((prevResults) => [...prevResults, newResult]);
     }
 
     return (
         <>
-            <Header
-                handleRunScript={handleRunScript}
-                setResult={setResult}
-                setSolution={setSolution}
-                solution={solution}
-            />
+            <Header handleRunScript={handleRunScript} setSolution={setSolution} solution={solution} />
             <div className={classes.layout}>
                 <div className={classes.container}>{children}</div>
             </div>
-            <Footer result={result} />
+            <Footer results={results} />
         </>
     );
 }

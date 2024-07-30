@@ -4,3 +4,23 @@
     color: white;
     text-align: center;
 }
+
+.resultsTable {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.resultsTable th,
+.resultsTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.resultsTable th {
+    background-color: #444;
+}
+
+.resultsTable tr:nth-child(even) {
+    background-color: #333;
+}
