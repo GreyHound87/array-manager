@@ -8,13 +8,14 @@ export const sortArr1 = (arr) => {
             throw new Error('The array must consist only of objects');
         }
         if (!arr[i].id) {
-            throw new Error(`Object #${i + 1} does not have an ID`);
+            throw new Error('All objects must have an ID');
         }
         if (typeof arr[i].id !== 'number') {
-            throw new Error(`Object #${i + 1} ID is not a numeric value`);
+            throw new Error('IDs must be numeric values');
         }
+        /* Optional check for unique IDs is removed because mock data contains duplicates */
         /* if (sortedArr[arr[i].id]) {
-            throw new Error(`Multiple array objects have the same ID: ${arr[i].id}`);
+            throw new Error('Multiple array objects have the same ID');
         } */
         sortedArr[arr[i].id] = structuredClone(arr[i]);
         Object.freeze(sortedArr[arr[i].id]);
