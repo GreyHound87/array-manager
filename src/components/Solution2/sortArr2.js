@@ -3,33 +3,27 @@ export const sortArr2 = (arr) => {
         throw new Error('Argument must be an array of objects');
     }
 
-    // For check for unique IDs
-    /* const seenIds = new Set(); */
+    const seenIds = new Set();
 
-    const result = arr.slice().sort((a, b) => {
-        if (typeof a !== 'object' || typeof b !== 'object') {
+    arr.forEach((item) => {
+        if (typeof item !== 'object') {
             throw new Error('The array must consist only of objects');
         }
-        if (!a.id || !b.id) {
+        if (!item.id) {
             throw new Error('All objects must have an ID');
         }
-        if (typeof a.id !== 'number' || typeof b.id !== 'number') {
+        if (typeof item.id !== 'number') {
             throw new Error('IDs must be numeric values');
         }
-
-        // Check for unique IDs
-        /* if (seenIds.has(a.id) || seenIds.has(b.id) || a.id === b.id) {
-            throw new Error('Multiple array objects have the same ID');
+        if (seenIds.has(item.id)) {
+            throw new Error(`Multiple array objects have the same ID`);
         }
-        seenIds.add(a.id);
-        seenIds.add(b.id); */
-
-        Object.freeze(a);
-        Object.freeze(b);
-
-        return a.id - b.id;
+        seenIds.add(item.id);
     });
 
+    const result = arr.slice().sort((a, b) => a.id - b.id);
+
+    result.forEach((item) => Object.freeze(item));
     Object.freeze(result);
     return result;
 };

@@ -14,10 +14,10 @@ export function Layout({ children }) {
         try {
             switch (solution) {
                 case 'Solution1':
-                    sortedData = sortArr1(data);
+                    sortArr1(data);
                     break;
                 case 'Solution2':
-                    sortedData = sortArr2(data);
+                    sortArr2(data);
                     break;
                 default:
                     throw new Error('Unknown solution');

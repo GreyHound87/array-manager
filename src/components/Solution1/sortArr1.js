@@ -13,10 +13,9 @@ export const sortArr1 = (arr) => {
         if (typeof arr[i].id !== 'number') {
             throw new Error('IDs must be numeric values');
         }
-        /* Optional check for unique IDs is removed because mock data contains duplicates */
-        /* if (sortedArr[arr[i].id]) {
+        if (sortedArr[arr[i].id]) {
             throw new Error('Multiple array objects have the same ID');
-        } */
+        }
         sortedArr[arr[i].id] = structuredClone(arr[i]);
         Object.freeze(sortedArr[arr[i].id]);
     }
