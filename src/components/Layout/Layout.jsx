@@ -3,6 +3,7 @@ import classes from './Layout.module.scss';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { sortArr1 } from '../Solution1/sortArr1';
+import { sortArr2 } from '../Solution2/sortArr2';
 
 export function Layout({ children }) {
     const [result, setResult] = useState('');
@@ -11,13 +12,22 @@ export function Layout({ children }) {
     function handleRunScript(data) {
         const startTime = performance.now();
         try {
-            sortArr1(data);
+            switch (solution) {
+                case 'Solution1':
+                    sortedData = sortArr1(data);
+                    break;
+                case 'Solution2':
+                    sortedData = sortArr2(data);
+                    break;
+                default:
+                    throw new Error('Unknown solution');
+            }
         } catch (error) {
             console.error(error.message);
         }
         const endTime = performance.now();
         const timeTaken = endTime - startTime;
-        return `sortArr1: Array length: ${data.length}, Time taken: ${timeTaken.toFixed(2)} ms`;
+        return `${solution}: Array length: ${data.length}, Time taken: ${timeTaken.toFixed(2)} ms`;
     }
 
     return (
