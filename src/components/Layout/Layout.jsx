@@ -4,6 +4,7 @@ import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { sortArr1 } from '../Solution1/sortArr1';
 import { sortArr2 } from '../Solution2/sortArr2';
+import { sortArr3 } from '../Solution3/sortArr3';
 
 export function Layout({ children }) {
     const [results, setResults] = useState([]);
@@ -18,6 +19,9 @@ export function Layout({ children }) {
                     break;
                 case 'Solution2':
                     sortArr2(data);
+                    break;
+                case 'Solution3':
+                    sortArr3(data);
                     break;
                 default:
                     throw new Error('Unknown solution');

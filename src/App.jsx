@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Layout, Intro, Solution1, Solution2 } from './components';
+import { Layout, Intro, Solution1, Solution2, Solution3 } from './components';
 
 export function App() {
     return (
@@ -14,6 +14,7 @@ export function App() {
                                 <Route index element={<Intro />} />
                                 <Route path="/solution1" element={<Solution1 />} />
                                 <Route path="/solution2" element={<Solution2 />} />
+                                <Route path="/solution3" element={<Solution3 />} />
                             </Routes>
                         </Layout>
                     }

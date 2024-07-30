@@ -91,6 +91,13 @@ export function Header({ handleRunScript, setSolution, solution }) {
                 >
                     Solution 2
                 </Link>
+                <Link
+                    to="/solution3"
+                    className={classNames(classes.tab, { [classes.activeTab]: solution === 'Solution3' })}
+                    onClick={() => setSolution('Solution3')}
+                >
+                    Solution 3
+                </Link>
             </nav>
             <div className={classes.buttons}>
                 <button type="button" onClick={() => handleRunScript(data100)} disabled={!solution}>
