@@ -1,10 +1,8 @@
 export const sortArr3 = (arr) => {
-    // Проверка, что аргумент является массивом
     if (!Array.isArray(arr)) {
         throw new Error('Argument must be an array of objects.');
     }
 
-    // Проверка, что все элементы массива являются объектами и содержат поле id
     const ids = new Set();
     arr.forEach((item) => {
         if (typeof item !== 'object' || item === null) {
@@ -22,7 +20,6 @@ export const sortArr3 = (arr) => {
         ids.add(item.id);
     });
 
-    // Создание глубокой копии и заморозка каждого объекта
     const deepCopyAndFreeze = (obj) => {
         const copy = JSON.parse(JSON.stringify(obj));
         return Object.freeze(copy);
@@ -30,9 +27,7 @@ export const sortArr3 = (arr) => {
 
     const copiedArray = arr.map(deepCopyAndFreeze);
 
-    // Сортировка массива по значению поля id
     const sortedArray = copiedArray.sort((a, b) => a.id - b.id);
 
-    // Заморозка нового массива
     return Object.freeze(sortedArray);
 };

@@ -1,5 +1,9 @@
 import { sortArr1 } from '../components/Solution1/sortArr1';
 import { sortArr2 } from '../components/Solution2/sortArr2';
+import { sortArr3 } from '../components/Solution3/sortArr3';
+import { sortArr4 } from '../components/Solution4/sortArr4';
+import { sortArr5 } from '../components/Solution5/sortArr5';
+import { sortArr6 } from '../components/Solution6/sortArr6';
 
 const testSortFunction = (sortFunction) => {
     describe(`${sortFunction.name}`, () => {
@@ -52,3 +56,7 @@ const testSortFunction = (sortFunction) => {
 
 testSortFunction(sortArr1);
 testSortFunction(sortArr2);
+testSortFunction(sortArr3);
+testSortFunction(sortArr4);
+testSortFunction(sortArr5);
+testSortFunction(sortArr6);

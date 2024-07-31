@@ -5,12 +5,22 @@ import { Footer } from '../Footer';
 import { sortArr1 } from '../Solution1/sortArr1';
 import { sortArr2 } from '../Solution2/sortArr2';
 import { sortArr3 } from '../Solution3/sortArr3';
+import { sortArr4 } from '../Solution4/sortArr4';
+import { sortArr5 } from '../Solution5/sortArr5';
+import { sortArr6 } from '../Solution6/sortArr6';
 
 export function Layout({ children }) {
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState({
+        Solution1: { sm: [], md: [], lg: [] },
+        Solution2: { sm: [], md: [], lg: [] },
+        Solution3: { sm: [], md: [], lg: [] },
+        Solution4: { sm: [], md: [], lg: [] },
+        Solution5: { sm: [], md: [], lg: [] },
+        Solution6: { sm: [], md: [], lg: [] },
+    });
     const [solution, setSolution] = useState('');
 
-    function handleRunScript(data) {
+    function handleRunScript(data, dataSize) {
         const startTime = performance.now();
         try {
             switch (solution) {
@@ -23,6 +33,15 @@ export function Layout({ children }) {
                 case 'Solution3':
                     sortArr3(data);
                     break;
+                case 'Solution4':
+                    sortArr4(data);
+                    break;
+                case 'Solution5':
+                    sortArr5(data);
+                    break;
+                case 'Solution6':
+                    sortArr6(data);
+                    break;
                 default:
                     throw new Error('Unknown solution');
             }
@@ -31,13 +50,14 @@ export function Layout({ children }) {
         }
         const endTime = performance.now();
         const timeTaken = endTime - startTime;
-        const newResult = {
-            id: results.length + 1,
-            solution,
-            dataSize: data.length,
-            timeTaken: timeTaken.toFixed(2),
-        };
-        setResults((prevResults) => [...prevResults, newResult]);
+
+        setResults((prevResults) => ({
+            ...prevResults,
+            [solution]: {
+                ...prevResults[solution],
+                [dataSize]: [...prevResults[solution][dataSize], timeTaken.toFixed(2)],
+            },
+        }));
     }
 
     return (
