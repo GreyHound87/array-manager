@@ -35,11 +35,12 @@ const testSortFunction = (sortFunction) => {
         });
 
         test('should return a sorted and immutable copy of the original array', () => {
-            const data = [
+            const originalData = [
                 { id: 3, name: 'Item 3' },
                 { id: 1, name: 'Item 1' },
                 { id: 2, name: 'Item 2' },
             ];
+            const data = [...originalData];
             const result = sortFunction(data);
             expect(result).toEqual([
                 { id: 1, name: 'Item 1' },
@@ -50,6 +51,7 @@ const testSortFunction = (sortFunction) => {
             result.forEach((item) => {
                 expect(Object.isFrozen(item)).toBe(true);
             });
+            expect(data).toEqual(originalData);
         });
     });
 };

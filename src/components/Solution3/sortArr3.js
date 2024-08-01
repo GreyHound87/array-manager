@@ -1,33 +1,39 @@
 export const sortArr3 = (arr) => {
     if (!Array.isArray(arr)) {
-        throw new Error('Argument must be an array of objects.');
+        throw new Error('Argument must be an array of objects');
     }
 
-    const ids = new Set();
-    arr.forEach((item) => {
-        if (typeof item !== 'object' || item === null) {
-            throw new Error('The array must consist only of objects.');
+    for (let i = 0; i < arr.length; i++) {
+        if (typeof arr[i] !== 'object' || arr[i] === null) {
+            throw new Error('The array must consist only of objects');
         }
-        if (!item.hasOwnProperty('id')) {
-            throw new Error('All objects must have an ID.');
+        if (!('id' in arr[i])) {
+            throw new Error('All objects must have an ID');
         }
-        if (typeof item.id !== 'number') {
-            throw new Error('IDs must be numeric values.');
+        if (typeof arr[i].id !== 'number') {
+            throw new Error('IDs must be numeric values');
         }
-        if (ids.has(item.id)) {
-            throw new Error('Multiple array objects have the same ID.');
+    }
+
+    const ids = {};
+    for (let i = 0; i < arr.length; i++) {
+        if (ids[arr[i].id]) {
+            throw new Error('Multiple array objects have the same ID');
         }
-        ids.add(item.id);
+        ids[arr[i].id] = true;
+    }
+
+    const deepCopy = arr.map((obj) => {
+        const newObj = {};
+        const keys = Object.keys(obj);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            newObj[key] = obj[key];
+        }
+        return Object.freeze(newObj);
     });
 
-    const deepCopyAndFreeze = (obj) => {
-        const copy = JSON.parse(JSON.stringify(obj));
-        return Object.freeze(copy);
-    };
-
-    const copiedArray = arr.map(deepCopyAndFreeze);
-
-    const sortedArray = copiedArray.sort((a, b) => a.id - b.id);
+    const sortedArray = deepCopy.slice().sort((a, b) => a.id - b.id);
 
     return Object.freeze(sortedArray);
 };

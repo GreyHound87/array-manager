@@ -1,30 +1,52 @@
 export const sortArr5 = (arr) => {
-    if (!Array.isArray(arr)) {
+    if (!arr || typeof arr !== 'object' || arr.length === undefined) {
         throw new Error('Argument must be an array of objects');
     }
 
-    const idSet = new Set();
+    const result = [];
+    const idSet = {};
 
-    const copiedArr = arr.map((obj) => {
-        if (typeof obj !== 'object' || obj === null) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
+
+        if (typeof item !== 'object' || item === null) {
             throw new Error('The array must consist only of objects');
         }
-        if (!('id' in obj)) {
+
+        if (!('id' in item)) {
             throw new Error('All objects must have an ID');
         }
-        if (typeof obj.id !== 'number') {
+
+        if (typeof item.id !== 'number') {
             throw new Error('IDs must be numeric values');
         }
-        if (idSet.has(obj.id)) {
+
+        if (idSet[item.id]) {
             throw new Error('Multiple array objects have the same ID');
         }
-        idSet.add(obj.id);
 
-        const copy = JSON.parse(JSON.stringify(obj));
-        return Object.freeze(copy);
-    });
+        idSet[item.id] = true;
 
-    copiedArr.sort((a, b) => a.id - b.id);
+        const newItem = {};
+        for (const key in item) {
+            if (Object.prototype.hasOwnProperty.call(item, key)) {
+                newItem[key] = item[key];
+            }
+        }
+        Object.freeze(newItem);
+        result.push(newItem);
+    }
 
-    return Object.freeze(copiedArr);
+    for (let i = 0; i < result.length; i++) {
+        for (let j = i + 1; j < result.length; j++) {
+            if (result[i].id > result[j].id) {
+                const temp = result[i];
+                result[i] = result[j];
+                result[j] = temp;
+            }
+        }
+    }
+
+    Object.freeze(result);
+    return result;
 };

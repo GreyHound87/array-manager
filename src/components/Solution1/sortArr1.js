@@ -3,33 +3,37 @@ export const sortArr1 = (arr) => {
         throw new Error('Argument must be an array of objects.');
     }
 
-    const allObjects = arr.every((item) => typeof item === 'object' && !Array.isArray(item));
-    if (!allObjects) {
-        throw new Error('The array must consist only of objects.');
+    const seenIds = new Set();
+    for (let i = 0; i < arr.length; i++) {
+        if (typeof arr[i] !== 'object' || arr[i] === null) {
+            throw new Error('The array must consist only of objects.');
+        }
+        if ('id' in arr[i]) {
+            if (seenIds.has(arr[i].id)) {
+                throw new Error('Multiple array objects have the same ID.');
+            } else {
+                seenIds.add(arr[i].id);
+            }
+        } else {
+            throw new Error('All objects must have an ID.');
+        }
+        if (typeof arr[i].id !== 'number') {
+            throw new Error('IDs must be numeric values.');
+        }
     }
 
-    const hasIdField = arr.every((obj) => 'id' in obj);
-    if (!hasIdField) {
-        throw new Error('All objects must have an ID.');
+    const newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        const newObj = {};
+        for (const key in arr[i]) {
+            if (arr[i].hasOwnProperty(key)) {
+                newObj[key] = arr[i][key];
+            }
+        }
+        newArr.push(Object.freeze(newObj));
     }
 
-    const idsAreNumbers = arr.every((obj) => typeof obj.id === 'number');
-    if (!idsAreNumbers) {
-        throw new Error('IDs must be numeric values.');
-    }
+    newArr.sort((a, b) => a.id - b.id);
 
-    const idsAreUnique = Array.from(new Set(arr.map((obj) => obj.id))).length === arr.length;
-    if (!idsAreUnique) {
-        throw new Error('Multiple array objects have the same ID.');
-    }
-
-    const copiedArr = arr.map((obj) => JSON.parse(JSON.stringify(obj)));
-
-    const sortedArr = copiedArr.sort((a, b) => a.id - b.id);
-
-    const frozenArr = sortedArr.map((obj) => Object.freeze(obj));
-
-    const frozenArray = Object.freeze(frozenArr);
-
-    return frozenArray;
+    return Object.freeze(newArr);
 };
