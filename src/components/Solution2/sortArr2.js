@@ -1,34 +1,30 @@
 export const sortArr2 = (arr) => {
-    if (typeof arr !== 'object' || arr === null || !Array.isArray(arr)) {
+    if (arr.constructor !== Array) {
         throw new Error('Argument must be an array of objects.');
     }
+    const copyArr = structuredClone(arr);
+    const ids = new Set();
+    const sortedCopy = [];
 
-    const ids = [];
-    const copyArr = arr.reduce((acc, obj) => {
-        if (typeof obj !== 'object' || obj === null) {
+    copyArr.forEach((item) => {
+        const { id } = item;
+        if (typeof item !== 'object' || item === null) {
             throw new Error('The array must consist only of objects.');
         }
-        if (!('id' in obj)) {
+        if (!item.hasOwnProperty('id')) {
             throw new Error('All objects must have an ID.');
         }
-        if (typeof obj.id !== 'number') {
+        if (typeof id !== 'number') {
             throw new Error('IDs must be numeric values.');
         }
-        if (ids.includes(obj.id)) {
+        if (ids.has(id)) {
             throw new Error('Multiple array objects have the same ID.');
         }
-        ids.push(obj.id);
+        ids.add(id);
+        sortedCopy[id] = item;
+    });
 
-        const copyObj = JSON.parse(JSON.stringify(obj));
-        Object.freeze(copyObj);
+    const result = sortedCopy.flatMap((item) => Object.freeze(item));
 
-        acc.push(copyObj);
-        return acc;
-    }, []);
-
-    copyArr.sort((a, b) => a.id - b.id);
-
-    Object.freeze(copyArr);
-
-    return copyArr;
+    return Object.freeze(result);
 };

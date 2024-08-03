@@ -3,48 +3,27 @@ export const sortArr5 = (arr) => {
         throw new Error('Argument must be an array of objects');
     }
 
-    const result = [];
-    const idSet = {};
+    const idSet = new Set();
+    const result = arr.toSorted((a, b) => a.id - b.id);
 
-    for (let i = 0; i < arr.length; i++) {
-        const item = arr[i];
+    const itemCount = result.length;
+    for (let i = 0; i < itemCount; i++) {
+        const item = result[i];
 
         if (typeof item !== 'object' || item === null) {
             throw new Error('The array must consist only of objects');
         }
-
-        if (!('id' in item)) {
+        if (!item.hasOwnProperty('id')) {
             throw new Error('All objects must have an ID');
         }
-
         if (typeof item.id !== 'number') {
             throw new Error('IDs must be numeric values');
         }
-
-        if (idSet[item.id]) {
+        if (idSet.has(item.id)) {
             throw new Error('Multiple array objects have the same ID');
         }
-
-        idSet[item.id] = true;
-
-        const newItem = {};
-        for (const key in item) {
-            if (Object.prototype.hasOwnProperty.call(item, key)) {
-                newItem[key] = item[key];
-            }
-        }
-        Object.freeze(newItem);
-        result.push(newItem);
-    }
-
-    for (let i = 0; i < result.length; i++) {
-        for (let j = i + 1; j < result.length; j++) {
-            if (result[i].id > result[j].id) {
-                const temp = result[i];
-                result[i] = result[j];
-                result[j] = temp;
-            }
-        }
+        idSet.add(item.id);
+        Object.freeze(item);
     }
 
     Object.freeze(result);
