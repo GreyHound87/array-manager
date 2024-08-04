@@ -3,14 +3,29 @@ export const sortArr5 = (arr) => {
         throw new Error('Argument must be an array of objects');
     }
 
+    const result = arr.toSorted((a, b) => {
+        if (!a || typeof a !== 'object' || !b || typeof b !== 'object') {
+            throw new Error('The array must consist only of objects');
+        }
+        if (a === undefined || b === undefined) {
+            throw new Error('The array must consist only of objects');
+        }
+        if (!a.id || !b.id) {
+            throw new Error('All objects must have an ID');
+        }
+        return a.id - b.id;
+    });
+
     const idSet = new Set();
-    const result = arr.toSorted((a, b) => a.id - b.id);
 
     const itemCount = result.length;
     for (let i = 0; i < itemCount; i++) {
         const item = result[i];
 
-        if (typeof item !== 'object' || item === null) {
+        if (item === undefined || item === null) {
+            throw new Error('The array must consist only of objects');
+        }
+        if (typeof item !== 'object') {
             throw new Error('The array must consist only of objects');
         }
         if (!item.hasOwnProperty('id')) {
