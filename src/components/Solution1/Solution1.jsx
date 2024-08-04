@@ -8,7 +8,7 @@ export function Solution1() {
         <>
             <h2>Solution With For Of Loop, In Operator and Direct Property Check</h2>
             <SyntaxHighlighter language="javascript" style={docco}>
-                {sortArr1.toString()}
+                {`const sortArr = ${sortArr1.toString()}`}
             </SyntaxHighlighter>
         </>
     );
