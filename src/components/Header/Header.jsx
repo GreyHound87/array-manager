@@ -69,25 +69,18 @@ export function Header({ handleRunScript, setSolution, solution }) {
                         </ul>
                         <h4>Error Handling:</h4>
                         <ul>
-                            <li>
-                                If the input argument is not an array, the function must throw an error with the
-                                message: Argument must be an array of objects.
-                            </li>
-                            <li>
-                                If any element in the array is not an object, the function must throw an error with the
-                                message: The array must consist only of objects.
-                            </li>
+                            <li>If the input argument is not an array, the function must throw an error.</li>
+                            <li>If any element in the array is not an object, the function must throw an error.</li>
                             <li>
                                 If any object does not contain the <code>id</code> field, the function must throw an
-                                error with the message: All objects must have an ID.
+                                error.
                             </li>
                             <li>
                                 If the value of the <code>id</code> field is not a number, the function must throw an
-                                error with the message: IDs must be numeric values.
+                                error.
                             </li>
                             <li>
-                                If the <code>id</code> values are not unique, the function must throw an error with the
-                                message: Multiple array objects have the same ID.
+                                If the <code>id</code> values are not unique, the function must throw an error.
                             </li>
                         </ul>
                     </>

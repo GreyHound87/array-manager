@@ -1,39 +1,24 @@
 export const sortArr1 = (arr) => {
     if (!Array.isArray(arr)) {
-        throw new Error('Argument must be an array of objects.');
+        throw new Error('Input must be an array');
     }
 
-    const seenIds = new Set();
-    for (let i = 0; i < arr.length; i++) {
-        if (typeof arr[i] !== 'object' || arr[i] === null) {
-            throw new Error('The array must consist only of objects.');
+    for (const item of arr) {
+        if (typeof item !== 'object' || item === null) {
+            throw new Error('Array elements must be objects');
         }
-        if ('id' in arr[i]) {
-            if (seenIds.has(arr[i].id)) {
-                throw new Error('Multiple array objects have the same ID.');
-            } else {
-                seenIds.add(arr[i].id);
-            }
-        } else {
-            throw new Error('All objects must have an ID.');
+        if (!('id' in item)) {
+            throw new Error('Each object must have an "id" property');
         }
-        if (typeof arr[i].id !== 'number') {
-            throw new Error('IDs must be numeric values.');
+        if (typeof item.id !== 'number') {
+            throw new Error('The "id" property must be a number');
         }
     }
 
-    const newArr = [];
-    for (let i = 0; i < arr.length; i++) {
-        const newObj = {};
-        for (const key in arr[i]) {
-            if (arr[i].hasOwnProperty(key)) {
-                newObj[key] = arr[i][key];
-            }
-        }
-        newArr.push(Object.freeze(newObj));
+    const idSet = new Set(arr.map((item) => item.id));
+    if (idSet.size !== arr.length) {
+        throw new Error('The "id" values must be unique');
     }
 
-    newArr.sort((a, b) => a.id - b.id);
-
-    return Object.freeze(newArr);
+    return Object.freeze(arr.map((obj) => Object.freeze({ ...obj })).sort((a, b) => a.id - b.id));
 };

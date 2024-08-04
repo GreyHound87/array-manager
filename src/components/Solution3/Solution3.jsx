@@ -4,7 +4,7 @@ import { sortArr3 } from './sortArr3';
 export function Solution3() {
     return (
         <div>
-            <h2>Solution from GPT-4o Model</h2>
+            <h2>Solution With Filter, HasOwnProperty and Spread Operator</h2>
             <pre>
                 <code>{`const sortArr = ${sortArr3.toString()}`}</code>
             </pre>

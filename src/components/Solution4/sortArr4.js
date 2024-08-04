@@ -1,30 +1,23 @@
 export const sortArr4 = (arr) => {
     if (!Array.isArray(arr)) {
-        throw new Error('Argument must be an array of objects.');
+        throw new Error('Input must be an array');
     }
 
-    const idsSeen = {};
-    const deepCopiedAndFrozenArray = arr.map((obj) => {
-        if (typeof obj !== 'object' || obj === null) {
-            throw new Error('The array must consist only of objects.');
+    const validObjects = arr.reduce((acc, item) => {
+        if (typeof item === 'object' && item !== null && item.hasOwnProperty('id') && typeof item.id === 'number') {
+            acc.push(item);
         }
-        if (!obj.hasOwnProperty('id')) {
-            throw new Error('All objects must have an ID.');
-        }
-        if (typeof obj.id !== 'number') {
-            throw new Error('IDs must be numeric values.');
-        }
-        if (idsSeen[obj.id]) {
-            throw new Error('Multiple array objects have the same ID.');
-        }
-        idsSeen[obj.id] = true;
+        return acc;
+    }, []);
 
-        const deepCopy = JSON.parse(JSON.stringify(obj));
-        Object.freeze(deepCopy);
-        return deepCopy;
-    });
+    if (validObjects.length !== arr.length) {
+        throw new Error('Array elements must be objects with a numeric "id" property');
+    }
 
-    deepCopiedAndFrozenArray.sort((a, b) => a.id - b.id);
-    Object.freeze(deepCopiedAndFrozenArray);
-    return deepCopiedAndFrozenArray;
+    const idSet = new Set(validObjects.map((item) => item.id));
+    if (idSet.size !== validObjects.length) {
+        throw new Error('The "id" values must be unique');
+    }
+
+    return Object.freeze(validObjects.map((obj) => Object.freeze({ ...obj })).sort((a, b) => a.id - b.id));
 };
